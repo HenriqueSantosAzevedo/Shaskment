@@ -1,0 +1,255 @@
+{{> header }}
+
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-mail" style="background: {{CurrentLabel.color.backgroundColor}}; color: {{CurrentLabel.color.textColor}}"></i>
+                    <div class="d-inline">
+                        <h5>{{CurrentLabel.name}}</h5>
+                        <span>has {{CurrentLabel.messagesUnread}} unread emails</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/"><i class="ik ik-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Emails</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{CurrentLabel.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-center">
+                    <a href="" class="btn btn-warning">New Email</a>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {{#each labelList as |label|}}
+                                {{#if label.children}}
+                                    <li class="list-group-item" data-toggle="collapse" data-target="#collapse-{{label.id}}" aria-expanded="false" aria-controls="collapse-{{label.id}}">
+                                        <span class="btn" style="background:{{label.color.backgroundColor}}; color:{{label.color.textColor}};">
+                                            <i class="ik ik-flag"></i>
+                                            {{label.name}}
+                                            
+                                        </span>
+                                        
+                                        
+                                        <ul class="list-group list-group-flush collapse" id="collapse-{{label.id}}">
+                                            {{#each label.children as |child|}}
+                                                <li class="list-group-item">
+                                                    <a href="/email/in?label={{child.id}}" class="btn" style="background:{{child.color.backgroundColor}}; color:{{child.color.textColor}};">
+                                                        <i class="ik ik-flag"></i>
+                                                        {{child.name}}
+                                                        <span class="badge badge-light">{{child.messagesUnread}}</span>
+                                                    </a>
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+                                    </li>
+                                    
+                                {{else}}
+                                    <li class="list-group-item">
+                                        <a href="/email/in?label={{label.id}}" class="btn" style="background:{{label.color.backgroundColor}}; color:{{label.color.textColor}};">
+                                            <i class="ik ik-flag"></i>
+                                            {{label.name}}
+                                            <span class="badge badge-light">{{label.messagesUnread}}</span>
+                                        </a>
+                                    </li>
+                                {{/if}}
+                        {{/each}}
+                    </ul>
+
+                    {{!-- {{#each labelList as |label|}}
+                        {{#if label.children}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="childrenDrop-{{label.id}}" aria-expanded="true" aria-haspopup="true">
+                                    <i class="ik ik-mail" style="background:{{label.color.backgroundColor}}; color:{{label.color.textColor}};"></i>
+                                    {{label.name}}
+                                    <div class=" dropdown-menu" aria-labelledby="childrenDrop-{{label.id}}">
+                                        {{#each label.children as |child|}}
+                                                <a class="nav-link dropdown-item" href="/email/in?label={{child.id}}">
+                                                    <i class="ik ik-mail" style="background:{{child.color.backgroundColor}}; color:{{child.color.textColor}};"></i>
+                                                    {{child.name}}
+                                                </a>
+                                        {{/each}}
+                                    </div>
+                                </a>
+                            </li>
+                        {{else}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/email/in?label={{label.id}}">
+                                    <i class="ik ik-mail" style="background:{{label.color.backgroundColor}}; color:{{label.color.textColor}};"></i>
+                                    {{label.name}}
+                                </a>
+                            </li>
+                        {{/if}}
+                    {{/each}} --}}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header row">
+                    <div class="col col-sm-3">
+                        <div class="dropdown d-inline-block">
+                            <a class="btn-icon checkbox-dropdown dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                            <div class="dropdown-menu" aria-labelledby="moreDropdown">
+                                <a class="dropdown-item" id="checkbox_select_all" href="javascript:void(0);">Select All</a>
+                                <a class="dropdown-item" id="checkbox_deselect_all" href="javascript:void(0);">Deselect All</a>
+                            </div>
+                        </div>
+                        <div class="card-options d-inline-block">
+                            <a href="#"><i class="ik ik-inbox"></i></a>
+                            <a href="#"><i class="ik ik-plus"></i></a>
+                            <a href="#"><i class="ik ik-rotate-cw"></i></a>
+                            <div class="dropdown d-inline-block">
+                                <a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-horizontal"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">More Action</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-sm-6">
+                        <div class="card-search with-adv-search dropdown">
+                            <input type="text" class="form-control" placeholder="Search.." required="" id="searchBar">
+                            <button onclick="search()" class="btn btn-icon"><i class="ik ik-search"></i></button>
+                        </div>
+                    </div>
+                    <div class="col col-sm-3">
+                        <div class="card-options text-right">
+                            <span class="mr-5">1 - {{emailList.length}} of {{CurrentLabel.messagesTotal}}</span>
+                            {{#if nextPage}}
+                                <a onclick="UpdateQueryString('')">
+                                    <span class="ik ik-chevron-left"></span>
+                                </a>
+                                <a onclick='UpdateQueryString("{{nextPage}}")'>
+                                    <span class="ik ik-chevron-right"></span>
+                                </a>
+                            {{else}}
+                                <a disabled>
+                                    <span class="fa fa-chevron-left"></span>
+                                </a>
+                                <a disabled>
+                                    <span class="fa fa-chevron-right"></span>
+                                </a>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-item-wrap">
+                        {{#if emailList.length}}
+                            {{> email/messages }}
+                        {{else}}
+                            <li class="list-item">
+                                No messages found
+                            </li>
+                        {{/if}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function UpdateQueryString(value) {
+        const url = new URL(window.location);
+        const query_string = url.search;
+        const search_params = new URLSearchParams(query_string); 
+        if(!search_params.has('pageToken')) {search_params.append('pageToken', value);} else {search_params.set('pageToken', value);}
+        url.search = search_params.toString();
+        const new_url = url.toString();
+        window.location = url;
+    }
+    /*
+    function createMessageList() {
+        let list = document.getElementsByClassName('checkbox');
+        list = Array.prototype.filter.call(list, function(element) {
+            return element.firstChild.checked == true;
+        })
+        let idList = [];
+        list.forEach(element => {
+            idList.push(element.parentNode.parentNode.parentNode.dataset.messageid)
+        })
+        return JSON.stringify(idList);
+    }*/
+
+    function removeLabel(data, label){
+        var myform = document.createElement("form");
+        myform.action = "/email/removeLabel/" + label;
+        myform.method = "post";
+
+
+        product = document.createElement("input");
+        product.value = data;
+        product.name = "list";
+
+        product1 = document.createElement("input");
+        product1.value = window.location;
+        product1.name = "location";
+
+        myform.appendChild(product);
+        myform.appendChild(product1);
+
+        document.body.appendChild(myform);
+        myform.submit();
+    }
+
+    function addLabel(data, label){
+        var myform = document.createElement("form");
+        myform.action = "/email/addLabel/" + label;
+        myform.method = "post";
+
+        product = document.createElement("input");
+        product.value = data;
+        product.name = "list";
+
+        product1 = document.createElement("input");
+        product1.value = window.location;
+        product1.name = "location";
+
+        myform.appendChild(product);
+        myform.appendChild(product1);
+
+        document.body.appendChild(myform);
+        myform.submit();
+    }
+
+    function markAll() {
+        let list = document.getElementsByClassName('checkbox');
+        list = Array.prototype.filter.call(list, function(element) {
+            return element.firstChild.checked == false;
+        })
+        list.forEach(element => {
+            element.firstChild.checked = true;
+        })
+    }
+
+    function search() {
+        const value = document.getElementById("searchBar").value;
+        const url = new URL(window.location);
+        const query_string = url.search;
+        const search_params = new URLSearchParams(query_string); 
+        if(!search_params.has('search')) {search_params.append('search', value);} else {search_params.set('search', value);}
+        url.search = search_params.toString();
+        const new_url = url.toString();
+        window.location = url;
+    }
+</script>
+
+
+{{> end }}

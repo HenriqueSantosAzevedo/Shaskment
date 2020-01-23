@@ -1,0 +1,151 @@
+{{> header }}
+
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-settings bg-blue"></i>
+                    <div class="d-inline">
+                        <h5>{{Title}}</h5>
+                        <span>Style your stye</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/"><i class="ik ik-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">{{Title}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Password</h3>
+                </div>
+                <div class="card-body">
+
+                    <form action="profile">
+                        <div class="input-group">
+                            <span class="input-group-prepend" onclick="show(this)">
+                                <label class="input-group-text">
+                                    <i class="ik ik-eye-off text-blue"></i>
+                                </label>
+                            </span>
+                            <input type="password" name="password_old" class="form-control" placeholder="Old Password">
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-prepend" onclick="show(this)">
+                                <label class="input-group-text">
+                                    <i class="ik ik-eye-off text-blue"></i>
+                                </label>
+                            </span>
+                            <input type="password" name="new_old" class="form-control" placeholder="New Password">
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-prepend" onclick="show(this)">
+                                <label class="input-group-text">
+                                    <i class="ik ik-eye-off text-blue"></i>
+                                </label>
+                            </span>
+                            <input type="password" name="confirm_old" class="form-control" placeholder="Confirm Password">
+                        </div>
+
+                        <script>
+                            function show(item) {
+                                if(item.parentNode.children[1].type == 'password') {
+                                    item.parentNode.children[1].type = 'text';
+                                    item.children[0].children[0].classList = 'ik ik-eye text-success'
+                                }else {
+                                    item.parentNode.children[1].type = 'password';
+                                    item.children[0].children[0].classList = 'ik ik-eye-off text-blue'
+                                }
+                            }
+                        </script>
+                        <div class="button-group ">
+                            <button class="btn btn-large bg-secondary text-white">Cancel</button>
+                            <button class="btn btn-large bg-primary text-white">Change password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>User</h3>
+                </div>
+                <div class="card-body">
+
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text">
+                                <i class="ik ik-mail text-blue"></i>
+                            </label>
+                        </span>
+                        <input type="email" disabled class="form-control" value="{{user.profile.email}}">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text">
+                                <i class="ik ik-user text-blue"></i>
+                            </label>
+                        </span>
+                        <input type="text" disabled class="form-control" value="{{user.profile.name}}">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text">
+                                <i class="ik ik-link-2 text-blue"></i>
+                            </label>
+                        </span>
+                        <input type="text" disabled class="form-control" value="{{user.uuid}}">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header"><h3>Navigation Bar</h3></div>
+                <div class="card-body">
+                    <span  onclick="changeTheme('light')">
+                        <img src="/img/navbar/light.jpg" class="img-fluid border p-1 rounded" alt="">    
+                    </span>
+                    
+                    <hr>
+                    <img src="/img/navbar/dark.jpg" onclick="changeTheme('dark')" class="img-fluid border p-1 rounded" alt="">
+                    <hr>
+                    <img src="/img/navbar/blue.jpg" onclick="changeTheme('blue')" class="img-fluid border p-1 rounded" alt="">
+                    <hr>
+                    <img src="/img/navbar/red.jpg" onclick="changeTheme('red')" class="img-fluid border p-1 rounded" alt="">
+                    <hr>
+                    <img src="/img/navbar/orange.jpg" onclick="changeTheme('orange')" class="img-fluid border p-1 rounded" alt="">
+                    <hr>
+                    <img src="/img/navbar/green.jpg" onclick="changeTheme('green')" class="img-fluid border p-1 rounded" alt="">
+                    <hr>
+                    <img src="/img/navbar/purple.jpg" onclick="changeTheme('purple')" class="img-fluid border p-1 rounded" alt="">
+
+                    <script>
+                        function changeTheme(theme){
+                            jQuery(`<form action="/bar/${theme}" method="POST"></form>`).appendTo('body').submit();
+                        };
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> end }}

@@ -1,0 +1,45 @@
+{{!-- <li class="nav-item">
+    <a class="nav-link" href="/email/in?label=INBOX">
+        <i class="ik ik-inbox" style="background:#404E67; color:#fff;"></i>
+        Inbox
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/email/in?label=SENT">
+        <i class="ik ik-inbox" style="background:#404E67; color:#fff;"></i>
+        Sent
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/email/in?label=UNREAD">
+        <i class="ik ik-inbox" style="background:#404E67; color:#fff;"></i>
+        Unread
+    </a>
+</li> --}}
+
+{{#each labelList as |label|}}
+
+    {{#if label.children}}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="childrenDrop-{{label.id}}" aria-expanded="true" aria-haspopup="true">
+                <i class="ik ik-mail" style="background:{{label.color.backgroundColor}}; color:{{label.color.textColor}};"></i>
+                {{label.name}}
+                <div class=" dropdown-menu" aria-labelledby="childrenDrop-{{label.id}}">
+                    {{#each label.children as |child|}}
+                            <a class="nav-link dropdown-item" href="/email/in?label={{child.id}}">
+                                <i class="ik ik-mail" style="background:{{child.color.backgroundColor}}; color:{{child.color.textColor}};"></i>
+                                {{child.name}}
+                            </a>
+                    {{/each}}
+                </div>
+            </a>
+        </li>
+    {{else}}
+        <li class="nav-item">
+            <a class="nav-link" href="/email/in?label={{label.id}}">
+                <i class="ik ik-mail" style="background:{{label.color.backgroundColor}}; color:{{label.color.textColor}};"></i>
+                {{label.name}}
+            </a>
+        </li>
+    {{/if}}
+{{/each}}

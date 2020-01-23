@@ -1,0 +1,88 @@
+{{> header }}
+
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8 col-lg-auto">
+                <div class="page-header-title">
+                    <i class="ik ik-server bg-blue"></i>
+                    <div class="d-inline">
+                        <h5>{{data.name}}</h5>
+                        <div class="d-inline-flex">{{{data.des}}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="../index.html"><i class="ik ik-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item">
+                           Productivity
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Taskboard</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{data.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+        {{#each data.tasks as |list|}}
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>{{list.name}}</h3>
+                        
+                    </div>
+                    <div class="card-body task-{{list.color}}">
+                        <div class="dd" data-plugin="nestable">
+                            {{#if list.data}}
+                                <ol class="dd-list">
+                                    {{#each list.data as |listData|}}
+                                        <li class="dd-item" data-id="{{@index}}">
+                                            <div class="dd-handle">
+                                                <h6>{{listData.name}}</h6>
+                                                <p>{{listData.des}}</p>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                </ol>
+                            {{else}}
+                                {{#ifEquals @index "0"}}
+                                    <button class="btn btn-dark btn-block"><i class="ik ik-edit-2"></i>Edit</button>
+                                {{/ifEquals}}
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+<script>
+    $(function () {
+    $('.dd').nestable();
+
+    $('.dd').on('change', function () {
+        var $this = $(this);
+        var serializedData = window.JSON.stringify($($this).nestable('serialize'));
+
+        $this.parents('div.body').find('textarea').val(serializedData);
+    });
+
+    $('.dd4').nestable();
+
+    $('.dd4').on('change', function () {
+        var $this = $(this);
+        var serializedData = window.JSON.stringify($($this).nestable('serialize'));
+    });
+});
+</script>
+
+{{> end }}

@@ -1,0 +1,42 @@
+[
+    {
+        "id": 0,
+        "title": "primary",
+        "html": "<div class=\"text-primary\">#007bff</div>"
+    },
+    {
+        "id": 1,
+        "title": "secondary",
+        "html": "<div class=\"text-secondary\">#6c757d</div>"
+    },
+    {
+        "id": 2,
+        "title": "success",
+        "html": "<div class=\"text-success\">#28a745</div>"
+    },
+    {
+        "id": 3,
+        "title": "danger",
+        "html": "<div class=\"text-danger\">#dc3545</div>"
+    },
+    {
+        "id": 4,
+        "title": "warning",
+        "html": "<div class=\"text-warning\">#ffc107</div>"
+    },
+    {
+        "id": 5,
+        "title": "info",
+        "html": "<div class=\"text-info\">#17a2b8</div>"
+    },
+    {
+        "id": 6,
+        "title": "light",
+        "html": "<div class=\"text-light\">#f8f9fa</div>"
+    },
+    {
+        "id": 7,
+        "title": "dark",
+        "html": "<div class=\"text-dark\">#343a40</div>"
+    }
+]

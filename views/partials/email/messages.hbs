@@ -1,0 +1,67 @@
+
+    {{#each emailList as |message|}}
+        {{#isIn message.labelIds 'UNREAD'}}
+            <div class="list-item bg-white" data-messageID="{{message.message_id}}">
+        {{else}}
+            <div class="list-item bg-light font-weight-bold" data-messageID="{{message.message_id}}">
+        {{/isIn}}
+                <div class="item-inner">
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option3">
+                        <span class="custom-control-label">&nbsp;</span>
+                    </label>
+
+                    <div class="list-title">
+                        <a href="/email/id/{{message.message_id}}">
+                            {{message.subject}} - <bold>{{replaceBracket message.sender}}</bold>                        
+                        </a>
+                    </div>
+                    
+                    <div class="list-actions">
+                        <a href="#"><i class="ik ik-eye"></i></a>
+                        <a href="#"><i class="ik ik-inbox"></i></a>
+                        <a href="#"><i class="ik ik-edit-2"></i></a>
+                        <a href="#"><i class="ik ik-trash-2"></i></a>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- {{#isIn message.labelIds 'UNREAD'}}
+                <li class="message unread" data-messageID="{{message.message_id}}">
+            {{else}}
+                <li class="message" data-messageID="{{message.message_id}}">
+            {{/isIn}}
+                    <a href="/email/id/{{message.message_id}}">
+                        <div class="actions">
+                            <span class="action checkbox"><input type="checkbox"></span>
+                            {{#isIn message.labelIds 'STARRED'}}
+                                <span class="action"><i class="fa fa-star" style="color: gold;"></i></span>
+                            {{else}}
+                                <span class="action"><i class="fa fa-star"></i></span>
+                            {{/isIn}}
+
+                            {{#isIn message.labelIds 'IMPORTANT'}}
+                                <span class="action"><i class="fa fa-bookmark" style="color: gold;"></i></span>
+                            {{else}}
+                                <span class="action"><i class="fa fa-bookmark-o"></i></span>
+                            {{/isIn}}
+                        </div>
+                        <div class="header">
+                            <span class="from">{{replaceBracket message.sender}}</span>
+                            <span class="date">{{message.date}}</span>
+                        </div>
+                        <div class="title">
+                            {{message.subject}}
+                        </div>
+                        <div class="description">
+                            {{message.snippet}}
+                        </div>
+                        <br>
+                        {{#each message.labels as |label|}}
+                            <span class="badge mb-1"  style="background: {{label.color.backgroundColor}}; color: {{label.color.textColor}}">{{label.name}}</span>
+                        {{/each}}
+                    </a>
+                </li> -->
+    {{/each}}
+    

@@ -1,0 +1,102 @@
+{{> header }}
+
+{{> taskboard/menu-add }}
+{{> taskboard/menu-friends }}
+
+<div class="container-fluid">
+    <div class="row">
+        {{#each TASKBOARDS as |board|}}
+            <div class="col-md-4 mt-20">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h4 class="mt-20 mb-20">{{board.name}}</h4>
+                        <span class="text-dark">Description:</span><br><br>
+                        <div class="" style="height: 100px; overflow: auto;">
+                            {{{board.des}}}
+                        </div>
+                    </div>
+                    <div class="p-4 border-top mt-15">
+                        <div class="row text-center">
+                            <div class="col-4 border-right">
+                                <a href="/taskboard/board/{{board.uuid}}" class="btn link d-flex align-items-center justify-content-center">
+                                    <i class="ik ik-maximize-2 f-20 mr-5"></i>
+                                    Open
+                                </a>
+                            </div>
+                            <div class="col-4 border-right">
+                                {{#if board.type}}
+                                    <button disabled="true" type="button" class="btn link d-flex align-items-center justify-content-center">
+                                {{else}}
+                                     <button onclick="shareWith({'uuid':'{{board.uuid}}','name':'{{board.name}}'})" type="button" class="btn link d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#fullwindowFriends">
+                                {{/if}}
+                                        <i class="ik ik-share-2 f-20 mr-5"></i>
+                                        Share
+                                    </button>
+                            </div>
+                            <div class="col-4">
+                                <a onclick="alert('Remember deleting this is going to delete it for all users you shared it with')" href="/taskboard/menu/delete/{{board.uuid}}" class="btn link d-flex align-items-center justify-content-center">
+                                    <i class="ik ik-trash-2 f-20 mr-5"></i>
+                                    Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
+        <div class="col-md-4 mt-20">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div class="profile-pic mb-20">
+                        <h4 class="mt-20 mb-20">Create new</h4>
+                    <span>Taskboard</span>
+                    </div>
+                </div>
+                <div class="p-4 border-top mt-15">
+                    <div class="row text-center">
+                            <button class="btn col-12 link" data-toggle="modal" data-target="#fullwindowModal">
+                                <i class="ik ik-edit-2"></i>
+                                Create
+                            </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {{#each SHARED as |board|}}
+            <div class="col-md-4 mt-20">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h4 class="mt-20 mb-20">{{board.name}}</h4>
+                        <p>Shared by <span class="text-danger">{{board.from.name}}</span> </p>
+                        <span class="text-dark">Description:</span><br><br>
+                        <div class="" style="height: 100px; overflow: auto;">
+                            {{{board.des}}}
+                        </div>
+                    </div>
+                    <div class="p-4 border-top mt-15">
+                        <div class="row text-center">
+                            <div class="col-6 border-right">
+                                <a href="/taskboard/board/{{board.uuid}}" class="btn link d-flex align-items-center justify-content-center">
+                                    <i class="ik ik-maximize-2 f-20 mr-5"></i>
+                                    Open
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="/taskboard/menu/remove/{{board.uuid}}" class="btn link d-flex align-items-center justify-content-center">
+                                    <i class="ik ik-cloud-off f-20 mr-5"></i>
+                                    Dispose
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+{{> end }}

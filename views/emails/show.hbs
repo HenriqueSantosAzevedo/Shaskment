@@ -1,0 +1,105 @@
+{{> header }}
+
+<div class="container-fluid">
+    <div class="row">
+        <link rel="stylesheet" href="/css/inbox.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <div class="email-app col-lg-12">
+            <nav>
+                <a href="page-inbox-compose.html" class="btn btn-danger btn-block">New Email</a>
+                <ul class="nav">
+                    {{> email/label }}
+                </ul>
+            </nav>
+            <main class="inbox">
+                <div class="toolbar">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-envelope"></span>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-star"></span>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-star-o"></span>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-bookmark-o"></span>
+                        </button>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-mail-reply"></span>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-mail-reply-all"></span>
+                        </button>
+                        <button type="button" class="btn btn-light">
+                            <span class="fa fa-mail-forward"></span>
+                        </button>
+                    </div>
+                    <button type="button" class="btn btn-light">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                            <span class="fa fa-tags"></span>
+                            <span class="caret"></span>
+                        </button>
+                        <div class="dropdown-menu">
+                            {{#each labelList as |label|}}
+                                <a class="dropdown-item" data-id="{{label.id}}">Add to <span class="badge badge-pill mb-1" style="background: {{label.color.backgroundColor}}; color: {{label.color.textColor}}"> {{label.name}}</span></a>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="messages">
+                    <li class="message" >
+                            <div class="btn-group float-right">
+                                {{#isIn message.labelIds 'STARRED'}}
+                                    <span class="align-middle" style="margin-left: 10px;"><i class="fa fa-star" style="color: gold;"></i></span>
+                                {{else}}
+                                    <span class="align-middle" style="margin-left: 10px;"><i class="fa fa-star"></i></span>
+                                {{/isIn}}
+
+                                {{#isIn message.labelIds 'IMPORTANT'}}
+                                    <span class="align-middle" style="margin-left: 10px;"><i class="fa fa-bookmark" style="color: gold;"></i></span>
+                                {{else}}
+                                    <span class="align-middle" style="margin-left: 10px;"><i class="fa fa-bookmark-o"></i></span>
+                                {{/isIn}}
+
+                                {{#each message.labels as |label|}}
+                                    <span class="badge align-middle"  style="margin-left: 10px; background: {{label.color.backgroundColor}}; color: {{label.color.textColor}}">{{label.name}}</span>
+                                {{/each}}
+                            </div>
+                            <br>
+                            <br>
+                            <div class="header">
+                                <span class="from"><h3>{{replaceBracket message.sender}}</h3></span>
+                                
+                                <span class="date">{{message.date}}</span>
+                            </div>
+                            <div class="title">
+                                <h4>{{message.subject}}</h4>
+                            </div>
+                            <br>
+                            <hr>
+                            <br>
+                            <div class="description">
+                                {{#if message.body.textHtml}}
+                                    <iframe style="border: none; width: 100%; height: auto;" srcdoc="{{message.body.textHtml}}" onload="this.style.height=this.contentDocument.body.scrollHeight + 50 +'px';"></iframe>
+                                {{else}}
+                                    {{message.body.textPlain}}
+                                {{/if}}
+                            </div>
+                    </li>
+                </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+
+{{> end }}

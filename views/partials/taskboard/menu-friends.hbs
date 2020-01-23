@@ -1,0 +1,105 @@
+<div class="modal fade" id="fullwindowFriends" tabindex="-1" role="dialog" aria-labelledby="fullwindowFriends" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Share <span id="toShare" class="text-primary"></span> with:</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card new-cust-card">
+                    <div class="card-block">
+                        <form action="" method="POST" id="shareTable">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <tbody id="insertInto">
+                                        
+                                    </tbody>
+                                    <input type="text" name="shareList" id="shareList" style="display: none;">
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="submitTable">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let switcheryArray = [];
+    $( "#submitTable" ).click(function() {
+        let shareList = [];
+        switcheryArray.forEach((swi) => {
+            if(swi[0].element.checked) {
+                shareList.push(swi[1])
+            }
+        })
+        $('#shareList').val(JSON.stringify(shareList));
+        if(shareList.length > 0) $("#shareTable").submit();
+    });
+
+    function shareWith(data) {
+        socket.emit('getFriendsAvailable', data);
+        $('#toShare').text(data.name)
+        $("#shareTable").attr('action', `/taskboard/menu/share/${data.uuid}`)
+
+        switcheryArray.forEach(element => {
+            setSwitchery(element[0], false)
+        })
+    }
+
+    function setSwitchery(switchElement, checkedBool) {
+        if((checkedBool && !switchElement.isChecked()) || (!checkedBool && switchElement.isChecked())) {
+            switchElement.setPosition(true);
+            switchElement.handleOnchange(true);
+        }
+    }
+
+
+    socket.on("addFriend", (data) => {
+        switcheryArray = []
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.switchery.switchery-default'));
+        elems.forEach(function(html) {
+            $(html).remove();
+        });
+
+        $('#insertInto').append(`
+            <tr>
+                <td>
+                    <div class="d-inline-block align-middle">
+                        
+                        <div class="d-inline-block">
+                            <h6 class="mb-0">${data.name}</h6>
+                            <p class="text-muted mb-0">${data.email}</p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <input data-user="${data.uuid}" type="checkbox" class="js-switch" />
+                </td>
+            </tr>
+        `);
+        buttons()
+    })
+
+    function buttons() {
+        var elem = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        elem.forEach(function(html) {
+            switcheryArray.push([new Switchery(html, {
+                color: '#4099ff',
+                jackColor: '#fff'
+            }), $(html).attr('data-user')]);
+        });
+    }
+
+
+
+</script>

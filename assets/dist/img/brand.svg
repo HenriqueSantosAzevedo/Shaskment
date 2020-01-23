@@ -1,0 +1,15 @@
+<svg width="54.3" height="54" xmlns="http://www.w3.org/2000/svg">
+ <style type="text/css">.st0{fill:#EF4153;}</style>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g stroke="null" id="svg_1">
+   <path stroke="null" id="svg_4" d="m35.505339,33.940167c-0.49147,0.411957 -1.053151,0.686595 -1.755251,0.686595c-0.702101,0 -1.333991,-0.205978 -1.755251,-0.686595c-0.49147,-0.411957 -0.702101,-1.029892 -0.702101,-1.716487c0,-0.686595 0.21063,-1.235871 0.702101,-1.716487c0.49147,-0.480616 1.053151,-0.686595 1.755251,-0.686595c0.702101,0 1.263781,0.205978 1.755251,0.686595c0.49147,0.480616 0.702101,1.029892 0.702101,1.716487c-0.07021,0.686595 -0.28084,1.235871 -0.702101,1.716487z" class="st0"/>
+   <text stroke="null" transform="matrix(0.7021005495803898,0,0,0.686594832485923,7.818465124240548,3.417736723099698) " xml:space="preserve" text-anchor="start" font-family="Arvo, sans-serif" font-size="32" id="svg_6" y="45.366748" x="-10.941587" fill-opacity="null" stroke-opacity="null" stroke-width="0" fill="#000000">SK</text>
+  </g>
+ </g>
+</svg>

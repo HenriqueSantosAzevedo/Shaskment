@@ -1,0 +1,52 @@
+<!doctype html> <html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs 
+backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent 
+video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>{{Title}} | Shaskment</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800" rel="stylesheet">
+        
+        <link rel="stylesheet" href="/plugins/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="/plugins/ionicons/dist/css/ionicons.min.css">
+        <link rel="stylesheet" href="/plugins/icon-kit/dist/css/iconkit.min.css">
+        <link rel="stylesheet" href="/plugins/perfect-scrollbar/css/perfect-scrollbar.css">
+        <link rel="stylesheet" href="/dist/css/theme.css">
+        <link rel="stylesheet" href="/plugins/mohithg-switchery/dist/switchery.min.css" />
+        <link rel="stylesheet" href="/plugins/jquery-toast-plugin/dist/jquery.toast.min.css" />
+
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+
+        
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+        <script src="https://www.google-analytics.com/analytics.js"></script>
+        <script src="/src/js/vendor/modernizr-2.8.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+        <script> 
+            const socket = io('http://shaskment.ddns.net:8080');
+        </script>
+    </head>
+
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <div class="wrapper">
+            {{> bar }}
+
+            <div class="page-wrap">
+                {{> nav }}
+                
+                <div class="main-content">
+                

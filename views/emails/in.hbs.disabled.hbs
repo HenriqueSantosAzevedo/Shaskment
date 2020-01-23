@@ -1,0 +1,171 @@
+{{> header }}
+
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <i class="ik ik-mail" style="background: {{CurrentLabel.color.backgroundColor}}; color: {{CurrentLabel.color.textColor}}"></i>
+                    <div class="d-inline">
+                        <h5>{{CurrentLabel.name}}</h5>
+                        <span>has {{CurrentLabel.messagesUnread}} unread emails</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/"><i class="ik ik-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Emails</li>
+                        <li class="breadcrumb-item active" aria-current="page">{{CurrentLabel.name}}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <link rel="stylesheet" href="/css/inbox.css">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+        <div class="email-app col-lg-12">
+            <nav>
+                <a href="page-inbox-compose.html" class="btn btn-danger btn-block">New Email</a>
+                <ul class="nav">
+                    {{> email/label }}
+                </ul>
+            </nav>
+            <main class="inbox">
+                <div class="toolbar">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-light" onclick=" markAll()">
+                            <input type="checkbox">
+                        </button>
+                        <button type="button" class="btn btn-light" onclick=" removeLabel(createMessageList(), 'UNREAD')">
+                            <span class="fa fa-envelope"></span>
+                        </button>
+                        <button type="button" class="btn btn-light" onclick=" addLabel(createMessageList(), 'STARRED')">
+                            <span class="fa fa-star"></span>
+                        </button>
+                        <button type="button" class="btn btn-light" onclick=" removeLabel(createMessageList(), 'STARRED')">
+                            <span class="fa fa-star-o"></span>
+                        </button>
+                        <button type="button" class="btn btn-light" onclick=" addLabel(createMessageList(), 'IMPORTANT')">
+                            <span class="fa fa-bookmark"></span>
+                        </button>
+                    </div>
+                    <button type="button" class="btn btn-light">
+                        <span class="fa fa-trash-o"></span>
+                    </button>
+
+                    <div class="btn-group float-right">
+                        {{#if nextPage}}
+                            <button type="button" class="btn btn-light" onclick="UpdateQueryString('')">
+                                <span class="fa fa-chevron-left"></span>
+                            </button>
+                            <button type="button" class="btn btn-light" onclick='UpdateQueryString("{{nextPage}}")'>
+                                <span class="fa fa-chevron-right"></span>
+                            </button>
+                        {{else}}
+                            <button type="button" class="btn btn-light" disabled>
+                                <span class="fa fa-chevron-left"></span>
+                            </button>
+                            <button type="button" class="btn btn-light" disabled>
+                                <span class="fa fa-chevron-right"></span>
+                            </button>
+                        {{/if}}
+                        
+
+                        <script>
+                            function UpdateQueryString(value) {
+                                const url = new URL(window.location);
+                                const query_string = url.search;
+                                const search_params = new URLSearchParams(query_string); 
+                                if(!search_params.has('pageToken')) {search_params.append('pageToken', value);} else {search_params.set('pageToken', value);}
+                                url.search = search_params.toString();
+                                const new_url = url.toString();
+                                window.location = url;
+                            }
+                        </script>
+                    </div>
+                    <div class="btn-group float-right">
+                        <span class="align-middle btn">{{emailList.length}} messages loaded</span>
+                    </div>
+                    
+                </div>
+
+                <ul class="messages">
+                    {{> email/messages }}
+                    <script>
+                        function createMessageList() {
+                            let list = document.getElementsByClassName('checkbox');
+                            list = Array.prototype.filter.call(list, function(element) {
+                                return element.firstChild.checked == true;
+                            })
+                            let idList = [];
+                            list.forEach(element => {
+                                idList.push(element.parentNode.parentNode.parentNode.dataset.messageid)
+                            })
+                            return JSON.stringify(idList);
+                        }
+
+                        function removeLabel(data, label){
+                            var myform = document.createElement("form");
+                            myform.action = "/email/removeLabel/" + label;
+                            myform.method = "post";
+
+
+                            product = document.createElement("input");
+                            product.value = data;
+                            product.name = "list";
+
+                            product1 = document.createElement("input");
+                            product1.value = window.location;
+                            product1.name = "location";
+
+                            myform.appendChild(product);
+                            myform.appendChild(product1);
+
+                            document.body.appendChild(myform);
+                            myform.submit();
+                        }
+
+                        function addLabel(data, label){
+                            var myform = document.createElement("form");
+                            myform.action = "/email/addLabel/" + label;
+                            myform.method = "post";
+
+                            product = document.createElement("input");
+                            product.value = data;
+                            product.name = "list";
+
+                            product1 = document.createElement("input");
+                            product1.value = window.location;
+                            product1.name = "location";
+
+                            myform.appendChild(product);
+                            myform.appendChild(product1);
+
+                            document.body.appendChild(myform);
+                            myform.submit();
+                        }
+
+                        function markAll() {
+                            let list = document.getElementsByClassName('checkbox');
+                            list = Array.prototype.filter.call(list, function(element) {
+                                return element.firstChild.checked == false;
+                            })
+                            list.forEach(element => {
+                                element.firstChild.checked = true;
+                            })
+                        }
+                    </script>
+                </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+
+{{> end }}

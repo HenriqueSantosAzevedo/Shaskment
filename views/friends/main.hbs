@@ -1,0 +1,132 @@
+{{> header }}
+
+{{> friends/find }}
+
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="row align-items-end">
+            <div class="col-lg-8 col-lg-auto">
+                <div class="page-header-title">
+                    <i class="fas fa-users bg-blue"></i>
+                    <div class="d-inline">
+                        <h5>Friends</h5>
+                        <span>Oraganize</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <nav class="breadcrumb-container" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="../index.html"><i class="ik ik-home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item">
+                           Friends
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="row">
+        <div class="card table-card">
+            <div class="card-header">
+                <h3>Friendlist</h3>
+
+                <div class="card-header-right">
+                    
+                    <ul class="list-unstyled card-option" style="width: 90px;">
+                        <li><i class="ik ik-chevron-left action-toggle ik-chevron-right"></i></li>
+                        <li onclick="load()"><i class="ik ik-repeat"></i></li>
+                        <li><i class="ik ik-minus minimize-card"></i></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-block">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Friends since</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listFriend">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+            <script>
+                console.log('Test')
+                load();
+
+                function load(){
+                    $('#listFriend').empty();
+                    socket.emit('list.friends');
+                }
+
+                socket.on('listFriend', (data) => {
+                    $('#listFriend').append(`
+                        <tr data-remove-user="${data.uuid}">
+                            <td>
+                                <div class="d-inline-block align-middle">
+                                    <img src="${data.profile.image}" alt="user image" class="rounded-circle img-40 align-top mr-15">
+                                    <div class="d-inline-block">
+                                        <h6>${data.profile.name}</h6>
+                                        <p class="text-muted mb-0">${data.profile.email}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                ${data.profile.online}
+                            </td>
+                            
+                            <td>${data.date}</td>
+                            
+                            <td>
+                                <a href="#!">
+                                    <i class="ik ik-edit f-16 mr-15 text-green"></i>
+                                </a>
+                                <a class="removeFriend" data-remove-user="${data.uuid}">
+                                    <i class="ik ik-trash-2 f-16 text-red"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    `);
+
+                    removeFriend();
+                })
+
+                function removeFriend() {
+                    const list = $('.removeFriend');
+                    list.each(function(index, data) {
+                        data = $(data);
+                        data.click(function() {
+                            socket.emit('remove.friend', data.attr('data-remove-user'))
+                            $(`tr[data-remove-user=${data.attr('data-remove-user')}]`).remove();
+                        })
+                    })
+                }
+            </script>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="card">
+            <div class="card-block">
+                <button onclick="listPersons()" type="button" data-toggle="modal" data-target="#findFriends" class="btn btn-large btn-dark">Find friends</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> end }}
